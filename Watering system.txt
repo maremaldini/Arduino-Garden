@@ -1,0 +1,39 @@
+int waterLvSensor = A5;
+int valWaterLv = 0;
+int buzzer = 3;
+int pomp = 8;
+int sensorMoisture = A0;
+int valSensorMoisture = 0;
+
+void setup() {
+  pinMode(waterLvSensor, INPUT);
+  pinMode(buzzer, OUTPUT);
+  pinMode(pomp, OUTPUT);
+  pinMode(sensorMoisture, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  valWaterLv = analogRead(waterLvSensor);
+  Serial.print("Water lv: ");
+  Serial.println(valWaterLv);
+
+  if (valWaterLv < 160) {
+    digitalWrite(buzzer, HIGH);
+  }
+  else {
+    digitalWrite(buzzer, LOW);
+  }
+
+  valSensorMoisture = analogRead(sensorMoisture);
+  Serial.println("Moisture lv: ");
+  Serial.println(valSensorMoisture);
+  if (valSensorMoisture > 600) {
+    digitalWrite(pomp, HIGH);
+    delay(3000);
+  }
+  else {
+    digitalWrite(pomp, LOW);
+  }
+  delay(300);
+}
